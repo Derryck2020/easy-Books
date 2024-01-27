@@ -44,10 +44,6 @@ const ProductSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false,
 		},
-		freeShipping: {
-			type: Boolean,
-			default: false,
-		},
 		inventory: {
 			type: Number,
 			required: true,
