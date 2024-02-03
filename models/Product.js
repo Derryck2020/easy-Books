@@ -1,5 +1,31 @@
 const mongoose = require('mongoose');
 
+const ProductImageSchema = new mongoose.Schema({
+	width: Number,
+	height: Number,
+	url: String,
+	filename: String,
+	size: Number,
+	type: String,
+	thumbnails: {
+		small: {
+			url: String,
+			width: Number,
+			height: Number,
+		},
+		large: {
+			url: String,
+			width: Number,
+			height: Number,
+		},
+		full: {
+			url: String,
+			width: Number,
+			height: Number,
+		},
+	},
+});
+
 const ProductSchema = new mongoose.Schema(
 	{
 		name: {
@@ -13,36 +39,65 @@ const ProductSchema = new mongoose.Schema(
 			required: [true, 'Please provide product price'],
 			default: 0,
 		},
-		description: {
+		subject: {
 			type: String,
-			required: [true, 'Please provide product description'],
-			maxlength: [1000, 'Description cannot be more than 1000 characters'],
+			required: [true, 'Please provide the subject'],
+			maxlength: [100, 'Description cannot be more than 100 characters'],
 		},
-		image: {
+		level: {
 			type: String,
-			default: '/uploads/example.jpeg',
+			required: [true, 'Please provide the subject'],
+			enum: [
+				'senior high',
+				'junior high',
+				'upper primary',
+				'lower primary',
+				'kindergarten and nursery',
+			],
 		},
+		image: [ProductImageSchema],
 		category: {
 			type: String,
 			required: [true, 'Please provide product category'],
-			enum: ['office', 'kitchen', 'bedroom'],
+			enum: ['textbooks', 'questions and answers'],
 		},
 		company: {
 			type: String,
 			required: [true, 'Please provide company'],
 			enum: {
-				values: ['ikea', 'liddy', 'marcos'],
+				values: [
+					'aplus',
+					'best brain',
+					'aki ola',
+					'excellence',
+					'a.a series',
+					'alpha and omega',
+					'masterman',
+					'modern french',
+					'victory',
+					'GAST',
+					'A1 challenge',
+					'anointing',
+					'atta kay',
+					'concise',
+					'golden',
+					'in scope',
+					'kosooko',
+					"kov's",
+					'mopac',
+					'prof and figures',
+				],
 				message: '{VALUE} is not supported',
 			},
-		},
-		colors: {
-			type: [String],
-			default: ['#ffff'],
-			required: true,
 		},
 		featured: {
 			type: Boolean,
 			default: false,
+		},
+		description: {
+			type: String,
+			required: [true, 'Please provide product description'],
+			maxlength: [1000, 'Description cannot be more than 1000 characters'],
 		},
 		inventory: {
 			type: Number,
